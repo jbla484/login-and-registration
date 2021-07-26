@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class User {
-//Public member functions
+    //Public member functions
 public:
     //Blank contructor
     User() {
@@ -14,15 +15,14 @@ public:
         this->username = username;
         this->password = password;
 
-        accounts[count] = username;
-        ++count;
-        accounts[count] = password;
-        ++count;
+        accounts.push_back(username);
+        accounts.push_back(password);
+        ++count; ++count;
     }
     //Login function call to check if account exists
     void login(string username, string password) {
         count = 0;
-        while (count <= 100) {
+        while (count < accounts.size()) {
             if (username == accounts[count]) {
                 ++count;
                 if (password == accounts[count]) {
@@ -30,22 +30,23 @@ public:
                     ++count;
                 }
                 else {
-                    cout << "\nWrong credentials!" << endl << endl;
+                    cout << "\nWrong credentials!" << endl;
                     ++count;
                 }
-                
+
             }
             else {
+                cout << "No such username!" << endl;
                 ++count;
                 ++count;
             }
-        }  
+        }
     }
-//Private data members
+    //Private data members
 private:
     string username;
     string password;
-    string accounts[100];
+    vector<string> accounts{};
     int count = 0;
 };
 
@@ -63,8 +64,8 @@ int main()
         cin >> response;
         //Switch statement for login and registration choices
         switch (response) {
-        //Login statement asks the user for their username and password and then 
-        //calls the login function with the username and password parameters
+            //Login statement asks the user for their username and password and then 
+            //calls the login function with the username and password parameters
         case 'l':
             cout << "\nEnter your username: " << endl;
             cin >> username;
@@ -73,8 +74,8 @@ int main()
             users.login(username, password);
             cout << endl;
             break;
-        //Registering statement asks the user to enter a desired username and password and then 
-        //calls the registering function with the username and password parameters
+            //Registering statement asks the user to enter a desired username and password and then 
+            //calls the registering function with the username and password parameters
         case 'r':
             cout << "\nEnter a username: " << endl;
             cin >> username;
@@ -83,7 +84,7 @@ int main()
             users.registering(username, password);
             cout << "\nThanks for registering!" << endl << endl;
             break;
-        //Anything else other than 'l' or 'r'
+            //Anything else other than 'l' or 'r'
         default:
             cout << "\nWrong choice, try again." << endl << endl;
             break;
